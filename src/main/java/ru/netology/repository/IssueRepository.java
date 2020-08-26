@@ -7,8 +7,8 @@ import java.util.*;
 public class IssueRepository {
     private List<Issue> issues = new ArrayList<>();
 
-    public void addAll(List<Issue> issues) {
-        this.issues.addAll(issues);
+    public boolean addAll(List<Issue> issues) {
+        return this.issues.addAll(issues);
     }
 
     public List<Issue> findAll() {
@@ -32,7 +32,7 @@ public class IssueRepository {
         issues.removeIf(issue -> issue.getId() == id);
     }
 
-    public void removeAll() {
-        issues.clear();
+    public boolean removeAll(List<Issue> issues) {
+        return this.issues.removeAll(issues);
     }
 }
