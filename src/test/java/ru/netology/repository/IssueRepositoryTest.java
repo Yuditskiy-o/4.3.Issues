@@ -50,13 +50,6 @@ class IssueRepositoryTest {
         }
 
         @Test
-        public void shouldFindOneIssue() {
-            List<Issue> expected = List.of(first);
-            List<Issue> actual = repository.findAll();
-            assertEquals(expected, actual);
-        }
-
-        @Test
         public void shouldFindIssueByIdIfExist() {
             repository.findById(1);
 
@@ -107,13 +100,6 @@ class IssueRepositoryTest {
 
         @Test
         public void shouldAddAllIssue() {
-            List<Issue> expected = List.of(first, second, third);
-            List<Issue> actual = repository.findAll();
-            assertEquals(expected, actual);
-        }
-
-        @Test
-        public void shouldFindAllIssue() {
             List<Issue> expected = List.of(first, second, third);
             List<Issue> actual = repository.findAll();
             assertEquals(expected, actual);
