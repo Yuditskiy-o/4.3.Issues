@@ -1,6 +1,7 @@
 package ru.netology.repository;
 
 import ru.netology.domain.Issue;
+import ru.netology.exception.NotFoundException;
 
 import java.util.*;
 
@@ -29,6 +30,9 @@ public class IssueRepository {
     }
 
     public void removeById(int id) {
+        if (findById(id) == null) {
+            throw new NotFoundException("Element with id: " + id + " not found");
+        }
         issues.removeIf(issue -> issue.getId() == id);
     }
 

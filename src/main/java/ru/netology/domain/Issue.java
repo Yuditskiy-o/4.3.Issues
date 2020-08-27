@@ -9,7 +9,7 @@ import java.util.*;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Issue implements Comparable <Issue> {
+public class Issue implements Comparable<Issue> {
     private int id;
     private boolean isOpen;
     private String author;
