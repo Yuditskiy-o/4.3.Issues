@@ -12,9 +12,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class IssueRepositoryTest {
     private IssueRepository repository = new IssueRepository();
-    private Issue first = new Issue(1, true, "Author1", 1, new HashSet<String>(Arrays.asList("label1", "label2", "label3")), new HashSet<String>(Arrays.asList("assignee1", "assignee2", "assignee3")));
-    private Issue second = new Issue(2, false, "Author2", 3, new HashSet<String>(Arrays.asList("label4", "label5", "label6")), new HashSet<String>(Arrays.asList("assignee7", "assignee8", "assignee9")));
-    private Issue third = new Issue(3, true, "Author3", 5, new HashSet<String>(Arrays.asList("label4", "label5", "label6")), new HashSet<String>(Arrays.asList("assignee4", "assignee5", "assignee6")));
+    private Issue first = new Issue(1, true, "Author1", 1, new HashSet<>(Arrays.asList("label1", "label2", "label3")), new HashSet<>(Arrays.asList("assignee1", "assignee2", "assignee3")));
+    private Issue second = new Issue(2, false, "Author2", 3, new HashSet<>(Arrays.asList("label4", "label5", "label6")), new HashSet<>(Arrays.asList("assignee7", "assignee8", "assignee9")));
+    private Issue third = new Issue(3, true, "Author3", 5, new HashSet<>(Arrays.asList("label4", "label5", "label6")), new HashSet<>(Arrays.asList("assignee4", "assignee5", "assignee6")));
 
     @Nested
     public class EmptyRepository {

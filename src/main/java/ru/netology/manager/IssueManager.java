@@ -33,16 +33,34 @@ public class IssueManager {
         return filterBy(issue -> !issue.isOpen());
     }
 
-    public List<Issue> filterByAuthors(Collection<? extends String> authors) {
-        return filterBy(issue -> issue.getAuthor().equals(authors));
+    public List<Issue> filterByAuthors(String authors) {
+        Predicate<String> byAuthors = issue -> issue.equals(authors);
+        List<Issue> issues = new ArrayList<>();
+        for (Issue issue : repository.findAll())
+            if (byAuthors.test(issue.getAuthor())) {
+                issues.add(issue);
+            }
+        return issues;
     }
 
     public List<Issue> filterByLabels(Collection<? extends String> labels) {
-        return filterBy(issue -> issue.getIssueLabels().containsAll(labels));
+        Predicate<Set<String>> byLabels = issue -> issue.containsAll(labels);
+        List<Issue> issues = new ArrayList<>();
+        for (Issue issue : repository.findAll())
+            if (byLabels.test(issue.getIssueLabels())) {
+                issues.add(issue);
+            }
+        return issues;
     }
 
     public List<Issue> filterByAssignees(Collection<? extends String> assignees) {
-        return filterBy(issue -> issue.getIssueAssignees().contains(assignees));
+        Predicate<Set<String>> ByAssignees = issue -> issue.containsAll(assignees);
+        List<Issue> issues = new ArrayList<>();
+        for (Issue issue : repository.findAll())
+            if (ByAssignees.test(issue.getIssueAssignees())) {
+                issues.add(issue);
+            }
+        return issues;
     }
 
     public List<Issue> sortByNewest() {
@@ -59,11 +77,19 @@ public class IssueManager {
         return issues;
     }
 
-    public void openIssueById(int id, boolean isOpen) {
-        repository.findById(id).setOpen(isOpen);
+    public void openIssueById(int id) {
+        for (Issue issue : repository.findAll()) {
+            if (issue.getId() == id && !issue.isOpen()) {
+                issue.setOpen(true);
+            }
+        }
     }
 
-    public void closeIssueById(int id, boolean isOpen) {
-        repository.findById(id).setOpen(!isOpen);
+    public void closeIssueById(int id) {
+        for (Issue issue : repository.findAll()) {
+            if (issue.getId() == id && issue.isOpen()) {
+                issue.setOpen(false);
+            }
+        }
     }
 }
