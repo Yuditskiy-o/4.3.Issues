@@ -15,10 +15,11 @@ class IssueManagerTest {
     private IssueManager manager = new IssueManager(repository);
     private Issue first = new Issue(1, true, "Author1", 1, new HashSet<>(List.of("label1", "label2", "label3")), new HashSet<>(List.of("assignee1", "assignee2", "assignee3")));
     private Issue second = new Issue(2, false, "Author2", 3, new HashSet<>(List.of("label4", "label5", "label6")), new HashSet<>(List.of("assignee7", "assignee8", "assignee9")));
-    private Issue third = new Issue(3, true, "Author3", 5, new HashSet<>(List.of("label4", "label5", "label6")), new HashSet<>(List.of("assignee4", "assignee5", "assignee6")));
+    private Issue third = new Issue(3, true, "Author1", 5, new HashSet<>(List.of("label4", "label5", "label6")), new HashSet<>(List.of("assignee4", "assignee1", "assignee6")));
 
     @Nested
     public class EmptyManager {
+
         @Test
         public void shouldReturnEmptyWhenFindOpened() {
             List<Issue> expected = List.of();
@@ -87,6 +88,7 @@ class IssueManagerTest {
 
     @Nested
     public class SingleIssueManager {
+
         @Test
         public void shouldFindOpenIfOpened() {
             manager.add(first);
@@ -227,6 +229,77 @@ class IssueManagerTest {
             List<Issue> actual = manager.findClosed();
             assertEquals(expected, actual);
         }
+    }
 
+    @Nested
+    public class MultipleIssuesManager {
+
+        @BeforeEach
+        public void setUp() {
+            repository.addAll(List.of(first, second, third));
+        }
+
+        @Test
+        public void shouldAddMultipleIssues() {
+            List<Issue> expected = List.of(first, second, third);
+            List<Issue> actual = repository.findAll();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        public void shouldSortByNewest() {
+            List<Issue> expected = List.of(first, second, third);
+            List<Issue> actual = manager.sortByNewest();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        public void shouldSortByOldest() {
+            List<Issue> expected = List.of(third, second, first);
+            List<Issue> actual = manager.sortByOldest();
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        public void shouldFindByAuthor() {
+            Collection<Issue> expected = List.of(first, third);
+            Collection<Issue> actual = manager.filterByAuthors("Author1");
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        public void shouldReturnEmptyIfNoAuthor() {
+            Collection<Issue> expected = List.of();
+            Collection<Issue> actual = manager.filterByAuthors("Author4");
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        public void shouldFindByLabel() {
+            Collection<Issue> expected = List.of(second, third);
+            Collection<Issue> actual = manager.filterByLabels(new HashSet<>(List.of("label4")));
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        public void shouldReturnEmptyIfNoLabel() {
+            Collection<Issue> expected = List.of();
+            Collection<Issue> actual = manager.filterByLabels(new HashSet<>(List.of("label10")));
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        public void shouldFindByAssignee() {
+            Collection<Issue> expected = List.of(first, third);
+            Collection<Issue> actual = manager.filterByAssignees(new HashSet<>(List.of("assignee1")));
+            assertEquals(expected, actual);
+        }
+
+        @Test
+        public void shouldReturnEmptyWhenFindByAssignee() {
+            Collection<Issue> expected = List.of();
+            Collection<Issue> actual = manager.filterByAssignees(new HashSet<>(List.of("assignee10")));
+            assertEquals(expected, actual);
+        }
     }
 }
