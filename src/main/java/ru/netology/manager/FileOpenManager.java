@@ -28,8 +28,7 @@ public class FileOpenManager {
 
     public List<String> getAllKeys() {
         Comparator byAlphabet = Comparator.naturalOrder();
-        Set<String> extensions = new HashSet<>();
-        extensions.addAll(maps.keySet());
+        Set<String> extensions = new HashSet<>(maps.keySet());
         ArrayList<String> listExtensions = new ArrayList<>(extensions);
         listExtensions.sort(byAlphabet);
         return listExtensions;
@@ -37,8 +36,7 @@ public class FileOpenManager {
 
     public List<String> getAllValues() {
         Comparator byAlphabet = Comparator.naturalOrder();
-        Set<String> extensions = new HashSet<>();
-        extensions.addAll(maps.values());
+        Set<String> extensions = new HashSet<>(maps.values());
         ArrayList<String> listExtensions = new ArrayList<>(extensions);
         listExtensions.sort(byAlphabet);
         return listExtensions;
